@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+
+{% include '_menu.html' %}
+
+<div class="container mt-4">
+    <h1 class="text-center">Editar Cita</h1>
+    <br>
+    <hr>
+  <form action="/citas/procesar_cita" method="post">
+    <div class="row g-2 mt-3">
+      <div class="col-md-12 col-lg-8 mt-3 mb-3 pb-3" style="margin:0 auto;">
+
+
+        <div class="p-3 mt-5 mb-2 border border-1 border-dark" style="width:400px; height:350px; margin:0 auto;">
+          <div>
+              <div class="mb-3">
+                <label for="autor" class="form-label">Autor</label>
+                <input value="{{datos_cita.autor}}" type="text" class="form-control" required name="autor">
+              </div>
+              <div class="mb-3">
+                <label for="mensaje" class="form-label">Cita</label>
+                <textarea  rows="4" cols="30"  class="form-control" required name="mensaje" id="mensaje" style="resize:none;" >{{datos_cita.mensaje}}</textarea>
+              </div>
+
+            </div>
+          <div>
+              <div>
+                <input type="hidden" id="id" name="id" value="{{datos_cita.id}}">
+                <input type="hidden" id="operacion" name="operacion" value="Editar Cita">
+                <button type="submit" class="btn btn-primary">Grabar</button>
+                <a href="/" class="btn btn-danger" class="btn btn-primary">Cancelar</a>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</form>
+</div>
+
+{% endblock %}

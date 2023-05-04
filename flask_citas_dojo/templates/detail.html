@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+
+{% include '_menu.html' %}
+
+<div class="container mt-1">
+  <div><a  href="/" style="font-size: 1.3em;">Regresar</a></div>
+
+  <h1 class="text-center">Detalles de la Cita</h1>
+
+  <hr>
+
+  <div class="row mt-2 text-left">
+
+    <div class="opciones_detalle">
+      <div>
+        <h3 class="col-12 text-success mb-2">Mensajes Publicados por : {{mis_citas[0].nombre_publicador}}</h3>
+        <h4 class="text-success">Cantidad : {{mis_citas|length}}</h4>
+      </div>
+    </div>
+
+    <div class="col-12 mt-2 mb-2" style="margin:0 auto;">
+      <div class="p-3 mt-3 mb-2" style="width:400px; height:200px; margin:0 auto;">
+        <div class="mt-2 mb-2">
+            {%for cita in mis_citas%}
+              <h3>{{cita.autor}}: </h3> <p>{{cita.mensaje}}</p>
+            {%endfor%}
+        </div>
+      </div>
+  </div>
+
+  </div>
+</div>
+
+{% endblock %}

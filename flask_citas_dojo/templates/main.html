@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Dashboard Principal{% endblock %}
+
+{% block contenido %}
+
+{% include '_menu.html' %}
+
+<div class="container mt-5">
+  <h1>Bienvenidos al Dashboard del Sistema : {{sistema}} </h1>
+  <hr>
+  <div class="row g-2 mt-4 " style="min-height:250px;">
+      <div class="col-md-12 col-lg-6 mb-2 border border-1 border-dark">
+        <div><h4>Citas</h4></div>
+        <hr>
+
+        {%for cita in todas_citas%}
+        
+        <div class="p-3 mt-3 mb-2 border border-3 border-primary" style="width:400px; margin:0 auto;">
+            <div>
+                {%if cita.publicador == session['idusuario']%}
+                    <a href="/citas/editarcita/{{cita.id}}">Editar</a> | <a href="/citas/eliminarcita/{{cita.id}}" onclick="return confirm('desea eliminar la cita?')">Eliminar</a>
+                {%endif%}
+            </div>
+            <div>
+               <h3>{{cita.autor}} :</h3> <p>{{cita.mensaje}}</p>
+            </div>
+            <div>
+                <div>
+                  <p>Publicado por : <a href="/citas/detallecita/{{cita.publicador}}">{{cita.nombre_publicador}}</a></p>
+                  <a href="/citas/agregarfavoritas/{{cita.id}}" class="btn btn-primary">Agregar a Favoritas</a>
+                </div>
+            </div>
+        </div>
+        {%endfor%}
+      </div>
+
+      <div class="col-md-12 col-lg-6 mb-2 border border-1 border-dark">
+
+        <div><h4>Favoritas</h4></div>
+        <hr>
+
+        {%for cita in citas_favoritas%}
+        
+        <div class="p-3 mt-3 mb-2 border border-3 border-success" style="width:400px; margin:0 auto;">
+          <div>
+            {%if cita.publicador == session['idusuario']%}
+                <a href="/citas/editarcita/{{cita.id}}">Editar</a> | <a href="/citas/eliminarcita/{{cita.id}}" onclick="return confirm('desea eliminar la cita?')">Eliminar</a>
+            {%endif%}
+         </div>
+
+           <div>
+                <h3>{{cita.autor}} :</h3> <p>{{cita.mensaje}}</p>
+            </div>
+            <div>
+                <div>
+                  <p>Publicado por : <a href="/citas/detallecita/{{cita.publicador}}"> {{cita.nombre_publicador}} </a></p>
+                  <a href="/citas/removerfavoritas/{{cita.id}}" class="btn btn-primary">Remover a Favoritos</a>
+                </div>
+            </div>
+        </div>
+        {%endfor%}
+
+
+        <div class="p-3 mt-5 mb-2 border border-1 border-dark" style="width:400px; height:350px; margin:0 auto;">
+          <div><h3>Crear Cita</h3></div>
+          <form action="/citas/procesar_cita" method="POST">
+          <div>
+              <div class="mb-3">
+                <label for="autor" class="form-label">Autor</label>
+                <input required value="{{datos_form.autor}}" type="text" class="form-control" required name="autor">
+              </div>
+              <div class="mb-3">
+                <label for="mensaje" class="form-label">Cita</label>
+                <textarea required  rows="4" cols="30"  class="form-control" required name="mensaje" id="mensaje" style="resize:none;" >{{datos_form.mensaje}}</textarea>
+              </div>
+
+            </div>
+          <div>
+              <div>
+                <input type="hidden" id="operacion" name="operacion" value="Nueva Cita">
+                <button type="submit" class="btn btn-primary">Grabar</button>
+              </div>
+          </div>
+         </form>
+        </div>
+
+
+      </div>
+
+    </div>
+
+
+  </div>
+{% endblock %}
